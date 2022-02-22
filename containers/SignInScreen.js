@@ -13,28 +13,38 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 
 export default function SignInScreen({ setToken }) {
   const navigation = useNavigation();
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("Toto@gmail.com");
   const [password, setPassword] = useState("");
 
   const handlePress = async (event) => {
+    // console.log(1);
     event.preventDefault();
-    if (username || password) {
+    if (email && password) {
+      // console.log(2);
       try {
         const response = await axios.post(
           "https://express-airbnb-api.herokuapp.com/user/log_in",
           {
-            username: username,
+            email: email,
             password: password,
           }
         );
-        // console.log(response.data); j'arrive pas à console log respons.data
+
+        console.log(response.data.token);
         if (response.data.token) {
           setToken(response.data.token);
+          Alert.alert("☀️Connected☀️");
+        } else {
+          // setToken(null);
+          console.log(2);
+          Alert.alert("Connection failed");
         }
       } catch (error) {
         console.log(error.message);
+        // console.log(error.response);
       }
     } else {
+      // console.log("alert");
       Alert.alert("Please fill all fields");
     }
   };
@@ -42,13 +52,13 @@ export default function SignInScreen({ setToken }) {
   return (
     <KeyboardAwareScrollView>
       <View>
-        <Text>Name: </Text>
+        <Text>Email: </Text>
         <TextInput
-          placeholder="Username"
+          placeholder="Email"
           onChangeText={(text) => {
-            setUsername(text);
+            setEmail(text);
           }}
-          value={username}
+          value={email}
         />
         <Text>Password: </Text>
         <TextInput
