@@ -1,13 +1,14 @@
 import { Button, Text, TextInput, View, Alert } from "react-native";
 import { useState } from "react";
 import axios from "axios";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function SignUpScreen({ setToken }) {
-  const [email, setEmail] = useState("yy@gmail.com");
-  const [username, setUsername] = useState("yiyi");
-  const [description, setDescription] = useState("I am Yiyi");
-  const [password, setPassword] = useState("reza");
-  const [confirmPassword, setConfirmPassword] = useState("reza");
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [description, setDescription] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const handlePress = async (event) => {
     // const userToken = "secret-token";
@@ -39,7 +40,7 @@ export default function SignUpScreen({ setToken }) {
   };
 
   return (
-    <View>
+    <KeyboardAwareScrollView>
       <View>
         <Text>Email: </Text>
         <TextInput
@@ -86,6 +87,6 @@ export default function SignUpScreen({ setToken }) {
         <Button title="Sign up" onPress={handlePress} />
         <Text> Already have an account? Sign in</Text>
       </View>
-    </View>
+    </KeyboardAwareScrollView>
   );
 }
