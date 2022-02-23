@@ -77,7 +77,7 @@ export default function SignInScreen({ setToken }) {
             />
 
             <TextInput
-              value={email}
+              value={password}
               style={styles.input}
               placeholder="Password"
               secureTextEntry={true}

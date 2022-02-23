@@ -92,7 +92,7 @@ export default function App() {
                           headerTitleStyle: { color: "white" },
                         }}
                       >
-                        {() => <HomeScreen />}
+                        {() => <HomeScreen token={userToken} />}
                       </Stack.Screen>
 
                       <Stack.Screen
