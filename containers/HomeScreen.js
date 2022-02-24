@@ -1,10 +1,23 @@
 import { useNavigation } from "@react-navigation/core";
-import { Button, Text, View, ActivityIndicator, FlatList } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import StarRating from "react-native-star-rating";
+
+import {
+  Button,
+  Text,
+  View,
+  ActivityIndicator,
+  FlatList,
+  TouchableOpacity,
+  ImageBackground,
+  StyleSheet,
+  Image,
+  Dimensions,
+} from "react-native";
+
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-export default function HomeScreen({ setToken }) {
+export default function HomeScreen() {
   const navigation = useNavigation();
   const [offers, setOffers] = useState();
   const [isLoading, setIsloading] = useState(true);
@@ -36,15 +49,135 @@ export default function HomeScreen({ setToken }) {
       <FlatList
         data={offers}
         keyExtractor={(item) => String(item._id)}
-        renderItem={({ item }) => <Text>{item.title}</Text>}
-      />
+        renderItem={({ item }) => {
+          return (
+            <TouchableOpacity
+              style={styles.offerContainer}
+              onPress={() => {
+                navigation.navigate("Room", { id: item._id });
+              }}
+            >
+              {/* IMG CONTAINER: OFFER IMG + PRICE */}
 
-      <Button
-        title="Go to Profile"
-        onPress={() => {
-          navigation.navigate("Profile", { userId: 123 });
+              <ImageBackground
+                source={{ uri: item.photos[0].url }}
+                resizeMode="contain"
+                style={styles.offerImg}
+              >
+                <View sytle={styles.priceView}>
+                  <Text style={styles.priceText}>{item.price} €</Text>
+                </View>
+              </ImageBackground>
+
+              {/*  OFFER INFO CONTAINER: USER IMG, OFFER TITLE,  STARS, REVIEWS*/}
+              <View style={styles.infoContainer}>
+                <View>
+                  <Text
+                    style={styles.title}
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                  >
+                    {item.title}
+                  </Text>
+
+                  {/* RATING INFO: RATING STARS AND REVIEWS TEXT */}
+                  <View style={styles.review_icon}>
+                    <StarRating
+                      maxStars={5}
+                      rating={item.ratingValue}
+                      fullStarColor="#FFB000"
+                      emptyStarColor="#BBBBBB"
+                      starSize={20}
+                      emptyStar="star"
+                    />
+                    <Text style={styles.reviews_text}>
+                      {item.reviews} reviews
+                    </Text>
+                  </View>
+                </View>
+
+                {/* USER IMG */}
+                <Image
+                  source={{ uri: item.user.account.photo.url }}
+                  resizeMode="contain"
+                  style={styles.userImg}
+                />
+              </View>
+            </TouchableOpacity>
+          );
         }}
       />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  // OFFER CONTAINER
+  offerContainer: {
+    alignItems: "center",
+    marginBottom: 10,
+  },
+
+  offerImg: {
+    height: 200,
+    width: Dimensions.get("window").width * 0.9,
+    marginBottom: 10,
+    justifyContent: "flex-end",
+  },
+  priceView: {
+    backgroundColor: "black",
+  },
+  priceView: {
+    // backgroundColor: "red",
+    // width: 200,
+    // height: 50,
+    // justifyContent: "center",
+    // alignItems: "center",
+    // marginBottom: 10,
+    borderWidth: 3,
+    borderColor: "green",
+  },
+
+  priceText: {
+    // position: "absolute",
+    // backgroundColor: "black",
+    color: "black",
+    fontSize: 20,
+    // width: 80,
+    // height: 50,
+    // justifyContent: "center",
+    // alignItems: "center",
+    // bottom: 20,
+    // left: 80,
+    // textAlign: "center",
+  },
+
+  // OFFER INFO CONTAINER: USER IMG, OFFER TITLE, RATE
+
+  infoContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+
+  userImg: {
+    height: 50,
+    width: 50,
+    borderRadius: 50,
+    marginVertical: 5,
+  },
+
+  title: {
+    fontSize: 15,
+    width: 250,
+    marginVertical: 5,
+  },
+
+  review_icon: {
+    flexDirection: "row",
+  },
+
+  reviews_text: {
+    color: "#BBBBBB",
+    marginLeft: 10,
+  },
+});

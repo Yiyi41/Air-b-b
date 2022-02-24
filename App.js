@@ -10,6 +10,7 @@ import SignInScreen from "./containers/SignInScreen";
 import SignUpScreen from "./containers/SignUpScreen";
 import SettingsScreen from "./containers/SettingsScreen";
 import SplashScreen from "./containers/SplashScreen";
+import RoomScreen from "./containers/RoomScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -103,6 +104,7 @@ export default function App() {
                       >
                         {() => <ProfileScreen />}
                       </Stack.Screen>
+                      <Stack.Screen name="Room" component={RoomScreen} />
                     </Stack.Navigator>
                   )}
                 </Tab.Screen>
@@ -135,6 +137,7 @@ export default function App() {
               </Tab.Navigator>
             )}
           </Stack.Screen>
+          // <Stack.Screen name="RoomScreen" component={RoomScreen} />
         )}
       </Stack.Navigator>
     </NavigationContainer>

@@ -118,17 +118,6 @@ export default function SignUpScreen({ setToken }) {
             />
           </View>
 
-          {/* SIGN IN BTN BLOCK */}
-          {/* <View>
-            <Button title="Sign up" onPress={handlePress} />
-            <Text
-              onPress={() => {
-                navigation.navigate("SignIn");
-              }}
-            >
-              Already have an account? Sign in
-            </Text>
-          </View> */}
           <View style={styles.btn_Block}>
             <TouchableOpacity
               activeOpacity={0.8}
