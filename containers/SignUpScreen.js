@@ -1,7 +1,7 @@
+import Constants from "expo-constants";
 import {
   Platform,
   TouchableOpacity,
-  Button,
   Text,
   TextInput,
   View,

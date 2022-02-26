@@ -3,14 +3,15 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons, AntDesign } from "@expo/vector-icons";
+// import { MaterialIcons } from "@expo/vector-icons";
 import HomeScreen from "./containers/HomeScreen";
 import ProfileScreen from "./containers/ProfileScreen";
 import SignInScreen from "./containers/SignInScreen";
 import SignUpScreen from "./containers/SignUpScreen";
-import SettingsScreen from "./containers/SettingsScreen";
 import SplashScreen from "./containers/SplashScreen";
 import RoomScreen from "./containers/RoomScreen";
+import AroundScreen from "./containers/AroundScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -88,35 +89,29 @@ export default function App() {
                       <Stack.Screen
                         name="Home"
                         options={{
-                          title: "My App",
-                          headerStyle: { backgroundColor: "red" },
-                          headerTitleStyle: { color: "white" },
+                          title: "Home",
+                          headerStyle: { backgroundColor: "white" },
+                          headerTitleStyle: { color: "black" },
                         }}
                       >
                         {() => <HomeScreen token={userToken} />}
                       </Stack.Screen>
 
-                      <Stack.Screen
-                        name="Profile"
-                        options={{
-                          title: "User Profile",
-                        }}
-                      >
-                        {() => <ProfileScreen />}
-                      </Stack.Screen>
                       <Stack.Screen name="Room" component={RoomScreen} />
                     </Stack.Navigator>
                   )}
                 </Tab.Screen>
+
+                {/*  TAB SCREEN AROUND ME*/}
                 <Tab.Screen
-                  name="TabSettings"
+                  name="TabAroundMe"
                   options={{
-                    tabBarLabel: "Settings",
+                    tabBarLabel: "Around Me",
                     tabBarIcon: ({ color, size }) => (
-                      <Ionicons
-                        name={"ios-options"}
-                        size={size}
-                        color={color}
+                      <MaterialIcons
+                        name="location-pin"
+                        size={25}
+                        color="gray"
                       />
                     ),
                   }}
@@ -124,12 +119,38 @@ export default function App() {
                   {() => (
                     <Stack.Navigator>
                       <Stack.Screen
-                        name="Settings"
+                        name="AroundScreen"
                         options={{
-                          title: "Settings",
+                          title: "Around me",
+                          headerStyle: { backgroundColor: "white" },
+                          headerTitleStyle: { color: "black" },
                         }}
                       >
-                        {() => <SettingsScreen setToken={setToken} />}
+                        {() => <AroundScreen token={userToken} />}
+                      </Stack.Screen>
+                    </Stack.Navigator>
+                  )}
+                </Tab.Screen>
+
+                {/*  TAB SCREEN PROFILE*/}
+                <Tab.Screen
+                  name="TabProfile"
+                  options={{
+                    tabBarLabel: "Profile",
+                    tabBarIcon: ({ color, size }) => (
+                      <AntDesign name="user" size={25} color="black" />
+                    ),
+                  }}
+                >
+                  {() => (
+                    <Stack.Navigator>
+                      <Stack.Screen
+                        name="Profile"
+                        options={{
+                          title: "Profile",
+                        }}
+                      >
+                        {() => <ProfileScreen token={userToken} />}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}
@@ -137,7 +158,6 @@ export default function App() {
               </Tab.Navigator>
             )}
           </Stack.Screen>
-          // <Stack.Screen name="RoomScreen" component={RoomScreen} />
         )}
       </Stack.Navigator>
     </NavigationContainer>

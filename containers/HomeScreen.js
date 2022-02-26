@@ -61,10 +61,10 @@ export default function HomeScreen() {
 
               <ImageBackground
                 source={{ uri: item.photos[0].url }}
-                resizeMode="contain"
+                resizeMode="cover"
                 style={styles.offerImg}
               >
-                <View sytle={styles.priceView}>
+                <View style={styles.priceView}>
                   <Text style={styles.priceText}>{item.price} €</Text>
                 </View>
               </ImageBackground>
@@ -116,40 +116,28 @@ const styles = StyleSheet.create({
   offerContainer: {
     alignItems: "center",
     marginBottom: 10,
+    // width: Dimensions.get("window").width * 0.9,
   },
 
   offerImg: {
     height: 200,
     width: Dimensions.get("window").width * 0.9,
-    marginBottom: 10,
+    // marginBottom: 10,
     justifyContent: "flex-end",
   },
+
   priceView: {
     backgroundColor: "black",
-  },
-  priceView: {
-    // backgroundColor: "red",
-    // width: 200,
-    // height: 50,
-    // justifyContent: "center",
-    // alignItems: "center",
-    // marginBottom: 10,
-    borderWidth: 3,
-    borderColor: "green",
+    width: 80,
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
   },
 
   priceText: {
-    // position: "absolute",
-    // backgroundColor: "black",
-    color: "black",
+    color: "white",
     fontSize: 20,
-    // width: 80,
-    // height: 50,
-    // justifyContent: "center",
-    // alignItems: "center",
-    // bottom: 20,
-    // left: 80,
-    // textAlign: "center",
   },
 
   // OFFER INFO CONTAINER: USER IMG, OFFER TITLE, RATE

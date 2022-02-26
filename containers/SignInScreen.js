@@ -2,7 +2,6 @@ import Constants from "expo-constants";
 import { useNavigation } from "@react-navigation/core";
 import {
   Platform,
-  Button,
   Text,
   TextInput,
   View,
