@@ -15,10 +15,10 @@ import axios from "axios";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function SignInScreen({ setToken }) {
+export default function SignInScreen({ setUserData, token, userId }) {
   const navigation = useNavigation();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState(""); //Toto@gmail.com");
+  const [password, setPassword] = useState(""); //jklm");
 
   const handlePress = async (event) => {
     // console.log(1);
@@ -26,6 +26,10 @@ export default function SignInScreen({ setToken }) {
     if (email && password) {
       // console.log(2);
       try {
+        console.log("SignInScreen token:");
+        console.log(token);
+        console.log("SignInScreen userId:");
+        console.log(userId);
         const response = await axios.post(
           "https://express-airbnb-api.herokuapp.com/user/log_in",
           {
@@ -33,10 +37,9 @@ export default function SignInScreen({ setToken }) {
             password: password,
           }
         );
-
-        console.log(response.data.token);
         if (response.data.token) {
-          setToken(response.data.token);
+          setUserData(response.data.token, response.data.id);
+          //setUserId(response.data.id);
           Alert.alert("☀️Connected☀️");
         }
       } catch (error) {
@@ -141,9 +144,6 @@ const styles = StyleSheet.create({
   input: {
     height: 50,
     width: 300,
-    // backgroundColor: "pink",
-    // paddingVertical: 20,
-
     borderBottomWidth: 1,
     borderBottomColor: "#EB5A62",
   },

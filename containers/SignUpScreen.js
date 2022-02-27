@@ -14,7 +14,7 @@ import axios from "axios";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useNavigation } from "@react-navigation/core";
 import { SafeAreaView } from "react-native-safe-area-context";
-export default function SignUpScreen({ setToken }) {
+export default function SignUpScreen({ setUserData }) {
   const navigation = useNavigation();
 
   const [email, setEmail] = useState("");
@@ -40,7 +40,7 @@ export default function SignUpScreen({ setToken }) {
         );
         // console.log(response.data);
         if (response.data.token) {
-          setToken(response.data.token);
+          setUserData(response.data.token, response.data.id);
           Alert.alert("Succesful!!");
         }
       } catch (error) {
