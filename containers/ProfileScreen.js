@@ -78,7 +78,7 @@ export default function ProfileScreen({
         name: `photo.${tab[1]}`,
         type: `image.${tab[1]}`,
       });
-      console.log("formData", formData);
+
       const response = await axios.put(
         "https://express-airbnb-api.herokuapp.com/user/upload_picture",
         formData,
@@ -146,6 +146,11 @@ export default function ProfileScreen({
             <TouchableOpacity onPress={getPermissionAndGetPicture}>
               <MaterialIcons name="photo-library" size={30} color="gray" />
             </TouchableOpacity>
+
+            {/* BUTTON FOR UPLAOD PHOTO */}
+            <TouchableOpacity onPress={sendPicture}>
+              <AntDesign name="upload" size={30} color="gray" />
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -164,19 +169,16 @@ export default function ProfileScreen({
 
         {/* BUTTONS BLOCK */}
         <View style={styles.btnContainer}>
-          <TouchableOpacity style={styles.btn} onPress={sendPicture}>
-            <Text style={styles.btn_text}>Update</Text>
-          </TouchableOpacity>
+          {/* <TouchableOpacity style={styles.btn} onPress={sendPicture}>
+            <Text style={styles.btn_text}>Update Photo</Text>
+          </TouchableOpacity> */}
           <TouchableOpacity
             style={styles.btn}
             onPress={() => {
               setUserToken(null);
               setUserId(null);
               AsyncStorage.removeItem("userToken");
-              // console.log(1);
               AsyncStorage.removeItem("userId");
-              // console.log(userToken);
-              // console.log(userId);
             }}
           >
             <Text style={styles.btn_text}>Log out</Text>
@@ -189,9 +191,7 @@ export default function ProfileScreen({
 
 const styles = StyleSheet.create({
   container: {
-    // justifyContent: "center",
     alignItems: "center",
-    // width: Dimensions.get("window").width * 0.9,
   },
 
   // IMG CONTAINER
@@ -220,14 +220,14 @@ const styles = StyleSheet.create({
   },
 
   select_Photo_Btn_Container: {
-    height: 100,
+    height: 130,
     width: 100,
     justifyContent: "space-between",
     alignItems: "center",
   },
   // INFO CONTAINER
   infoTextContainer: {
-    height: 200,
+    height: 150,
     width: Dimensions.get("window").width * 0.9,
     justifyContent: "center",
     alignItems: "center",
@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
 
   // BUTTON CONTAINER
   btnContainer: {
-    height: 150,
+    height: 200,
     width: Dimensions.get("window").width * 0.9,
     justifyContent: "center",
     alignItems: "center",
@@ -269,10 +269,21 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
 
-  btn_text: {
-    fontSize: 20,
-    color: "gray",
-  },
+  // edit_btn: {
+  //   justifyContent: "center",
+  //   width: "50%",
+  //   alignItems: "center",
+  //   padding: 15,
+  //   borderRadius: 30,
+  //   borderColor: "#EB5A62",
+  //   borderWidth: 2,
+  //   marginVertica,
+  // },
 
-  setUserPhotoContainer: {},
+  // btn_text: {
+  //   fontSize: 20,
+  //   color: "gray",
+  // },
+
+  // setUserPhotoContainer: {},
 });
