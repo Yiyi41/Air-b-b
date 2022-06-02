@@ -111,13 +111,11 @@ export default function App() {
                     <Stack.Navigator>
                       <Stack.Screen
                         name="Home"
-                        options={
-                          {
-                            // title: "Airbnb",
-                            // headerStyle: { backgroundColor: "white" },
-                            // headerTitleStyle: { color: "black" },
-                          }
-                        }
+                        options={{
+                          title: "Airbnb",
+                          headerStyle: { backgroundColor: "white" },
+                          headerTitleStyle: { color: "black" },
+                        }}
                       >
                         {() => <HomeScreen token={userToken} />}
                       </Stack.Screen>

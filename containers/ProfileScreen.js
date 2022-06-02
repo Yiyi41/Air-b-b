@@ -44,7 +44,7 @@ export default function ProfileScreen({
         allowsEditing: true,
         aspect: [1, 1],
       });
-
+      console.log(selectPhoto);
       if (selectPhoto.cancelled === true) {
         alert("Pas de photo sélectionnée");
       } else {
@@ -76,15 +76,15 @@ export default function ProfileScreen({
       formData.append("photo", {
         uri: image,
         name: `photo.${tab[1]}`,
-        type: `image/${tab[1]}`,
+        type: `image.${tab[1]}`,
       });
-
+      console.log("formData", formData);
       const response = await axios.put(
         "https://express-airbnb-api.herokuapp.com/user/upload_picture",
         formData,
         { headers: { authorization: `Bearer ${userToken}` } }
       );
-      // console.log(response.data);
+      console.log(response.data);
       if (response.data) {
         setUploading(false);
         alert("envoyée");
@@ -106,6 +106,7 @@ export default function ProfileScreen({
 
         setUserProfile(response.data);
         setIsLoading(false);
+        // console.log(response.data);
       } catch (error) {
         console.log(error.response.data);
       }
@@ -125,9 +126,9 @@ export default function ProfileScreen({
         {/* PROFIL IMG BLOCK */}
         <View style={styles.imgContainer}>
           <View style={styles.user_Profil_container}>
-            {image ? (
+            {userProfil.photo.url ? (
               <Image
-                source={{ uri: image }}
+                source={{ uri: userProfil.photo.url }}
                 style={styles.imgProfil}
                 resizeMode="cover"
               />
