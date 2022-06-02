@@ -2,14 +2,16 @@ import { useRoute, useNavigation } from "@react-navigation/core";
 import {
   Text,
   View,
+  TextInput,
   ActivityIndicator,
   TouchableOpacity,
-  ImageBackground,
+  Alert,
   StyleSheet,
   Image,
   Dimensions,
   ScrollView,
-  Button,
+  Pressable,
+  Modal,
 } from "react-native";
 import axios from "axios";
 import { useState, useEffect } from "react";
@@ -34,6 +36,12 @@ export default function ProfileScreen({
 
   const [image, setImage] = useState(null);
   const [uploading, setUploading] = useState(false);
+
+  const [email, setEmail] = useState();
+  const [username, setUsername] = useState();
+  const [description, setDescription] = useState();
+
+  const [modalVisible, setModalVisible] = useState(false);
 
   // GET PERMISSION TO ACCES TO MEDIA LIBRARY
   const getPermissionAndGetPicture = async () => {
@@ -94,6 +102,34 @@ export default function ProfileScreen({
     }
   };
 
+  // EDIT USER INFO
+  const sendUpdateInfo = async () => {
+    setUploading(true);
+
+    try {
+      const formData = new FormData();
+      formData.append("userInfo", {
+        email: email,
+        username: username,
+        description: description,
+      });
+
+      const response = await axios.put(
+        "https://express-airbnb-api.herokuapp.com/user/update",
+        formData,
+        { headers: { authorization: `Bearer ${userToken}` } }
+      );
+
+      if (response.data) {
+        setUploading(false);
+        alert("updated");
+      }
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     const getProfilInfo = async () => {
       try {
@@ -106,7 +142,6 @@ export default function ProfileScreen({
 
         setUserProfile(response.data);
         setIsLoading(false);
-        // console.log(response.data);
       } catch (error) {
         console.log(error.response.data);
       }
@@ -157,21 +192,75 @@ export default function ProfileScreen({
         {/* PROFIL_INFO BLOCK */}
         <View style={styles.infoTextContainer}>
           <View style={styles.infoText_Line}>
-            <Text style={styles.infoText}>{userProfil.email}</Text>
-          </View>
-          <View style={styles.infoText_Line}>
             <Text style={styles.infoText}>{userProfil.username}</Text>
           </View>
           <View style={styles.infoText_Line}>
+            <Text style={styles.infoText}>{userProfil.email}</Text>
+          </View>
+          <View style={styles.infoText_Line_description}>
             <Text style={styles.infoText}>{userProfil.description}</Text>
           </View>
+
+          {/* MODAL */}
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+              setModalVisible(!modalVisible);
+            }}
+          >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                {/* <Text style={styles.modalText}>Hello World!</Text> */}
+                <TextInput
+                  style={styles.input}
+                  placeholder="email"
+                  onChangeText={(text) => {
+                    setEmail(text.toLowerCase());
+                  }}
+                  value={email}
+                />
+
+                <TextInput
+                  style={styles.input}
+                  placeholder="Username"
+                  onChangeText={(text) => {
+                    setUsername(text);
+                  }}
+                  value={username}
+                />
+
+                <TextInput
+                  style={styles.input}
+                  placeholder="Describe yourself in a few words"
+                  onChangeText={(text) => {
+                    setDescription(text);
+                  }}
+                  value={description}
+                />
+                <TouchableOpacity
+                  style={styles.btn}
+                  onPress={() => setModalVisible(!modalVisible)}
+                >
+                  <Text style={styles.btn_text}>Update</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
+
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={() => setModalVisible(true)}
+          >
+            {/* <AntDesign name="edit" size={30} color="gray" /> */}
+            <Text style={styles.btn_text}>Edit</Text>
+          </TouchableOpacity>
         </View>
 
         {/* BUTTONS BLOCK */}
         <View style={styles.btnContainer}>
-          {/* <TouchableOpacity style={styles.btn} onPress={sendPicture}>
-            <Text style={styles.btn_text}>Update Photo</Text>
-          </TouchableOpacity> */}
           <TouchableOpacity
             style={styles.btn}
             onPress={() => {
@@ -227,22 +316,35 @@ const styles = StyleSheet.create({
   },
   // INFO CONTAINER
   infoTextContainer: {
+    paddingTop: 20,
     height: 150,
     width: Dimensions.get("window").width * 0.9,
     justifyContent: "center",
     alignItems: "center",
-    marginVertical: 20,
+    marginVertical: 25,
   },
 
   infoText_Line: {
-    borderBottomWidth: 1,
-    borderBottomColor: "#EB5A62",
+    borderBottomWidth: 2,
+    borderBottomColor: "#FFBAC0",
     justifyContent: "flex-end",
     alignItems: "flex-start",
     height: 50,
     width: 250,
     fontSize: 18,
-    marginVertical: 5,
+    marginVertical: 1,
+  },
+
+  infoText_Line_description: {
+    padding: 5,
+    borderColor: "#FFBAC0",
+    borderWidth: 2,
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    height: 80,
+    width: 250,
+    fontSize: 18,
+    marginVertical: 20,
   },
 
   infoText: {
@@ -269,21 +371,38 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
 
-  // edit_btn: {
-  //   justifyContent: "center",
-  //   width: "50%",
-  //   alignItems: "center",
-  //   padding: 15,
-  //   borderRadius: 30,
-  //   borderColor: "#EB5A62",
-  //   borderWidth: 2,
-  //   marginVertica,
-  // },
+  input: {
+    height: 50,
+    width: 300,
+    borderBottomWidth: 1,
+    borderBottomColor: "#EB5A62",
+  },
 
-  // btn_text: {
-  //   fontSize: 20,
-  //   color: "gray",
-  // },
+  // MODAL
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
 
-  // setUserPhotoContainer: {},
+  modalView: {
+    backgroundColor: "white",
+    margin: 20,
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+
+  modalText: {
+    fontSize: 15,
+  },
 });

@@ -174,9 +174,6 @@ const styles = StyleSheet.create({
   input: {
     height: 50,
     width: 300,
-    // backgroundColor: "pink",
-    // paddingVertical: 20,
-
     borderBottomWidth: 1,
     borderBottomColor: "#EB5A62",
   },
