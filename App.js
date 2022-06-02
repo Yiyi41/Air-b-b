@@ -1,4 +1,15 @@
 import React, { useState, useEffect } from "react";
+import {
+  Text,
+  View,
+  ActivityIndicator,
+  StyleSheet,
+  ImageBackground,
+  Image,
+  Dimensions,
+  ScrollView,
+} from "react-native";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -100,11 +111,13 @@ export default function App() {
                     <Stack.Navigator>
                       <Stack.Screen
                         name="Home"
-                        options={{
-                          title: "Home",
-                          headerStyle: { backgroundColor: "white" },
-                          headerTitleStyle: { color: "black" },
-                        }}
+                        options={
+                          {
+                            // title: "Airbnb",
+                            // headerStyle: { backgroundColor: "white" },
+                            // headerTitleStyle: { color: "black" },
+                          }
+                        }
                       >
                         {() => <HomeScreen token={userToken} />}
                       </Stack.Screen>

@@ -26,10 +26,10 @@ export default function SignInScreen({ setUserData, token, userId }) {
     if (email && password) {
       // console.log(2);
       try {
-        console.log("SignInScreen token:");
-        console.log(token);
-        console.log("SignInScreen userId:");
-        console.log(userId);
+        // console.log("SignInScreen token:");
+        // console.log(token);
+        // console.log("SignInScreen userId:");
+        // console.log(userId);
         const response = await axios.post(
           "https://express-airbnb-api.herokuapp.com/user/log_in",
           {
@@ -74,7 +74,7 @@ export default function SignInScreen({ setUserData, token, userId }) {
               style={styles.input}
               placeholder="Email"
               onChangeText={(text) => {
-                setEmail(text);
+                setEmail(text.toLowerCase());
               }}
             />
 
@@ -84,7 +84,7 @@ export default function SignInScreen({ setUserData, token, userId }) {
               placeholder="Password"
               secureTextEntry={true}
               onChangeText={(text) => {
-                setPassword(text);
+                setPassword(text.toLowerCase());
               }}
             />
           </View>

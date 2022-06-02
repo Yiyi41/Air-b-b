@@ -48,11 +48,7 @@ export default function ProfileScreen({
       if (selectPhoto.cancelled === true) {
         alert("Pas de photo sélectionnée");
       } else {
-        console.log(selectPhoto.uri);
         setImage(selectPhoto.uri);
-        console.log(selectPhoto);
-        console.log(image);
-        //sendPicture();
       }
     } else {
       alert("Permision refusée");
@@ -73,7 +69,6 @@ export default function ProfileScreen({
 
   // SEND PHOTO
   const sendPicture = async () => {
-    console.log("je passe dans send picture");
     setUploading(true);
     const tab = image.split(".");
     try {
@@ -89,8 +84,11 @@ export default function ProfileScreen({
         formData,
         { headers: { authorization: `Bearer ${userToken}` } }
       );
-
-      console.log(response.data); //pas de réponse d'axios?
+      // console.log(response.data);
+      if (response.data) {
+        setUploading(false);
+        alert("envoyée");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -101,7 +99,6 @@ export default function ProfileScreen({
       try {
         // console.log(token);
         // console.log(userId);
-
         const response = await axios.get(
           `https://express-airbnb-api.herokuapp.com/user/${userId}`,
           { headers: { authorization: `Bearer ${userToken}` } }
@@ -127,10 +124,18 @@ export default function ProfileScreen({
       <View style={styles.container}>
         {/* PROFIL IMG BLOCK */}
         <View style={styles.imgContainer}>
-          <View style={styles.userIcon}>
-            <AntDesign name="user" size={100} color="gray" />
+          <View style={styles.user_Profil_container}>
+            {image ? (
+              <Image
+                source={{ uri: image }}
+                style={styles.imgProfil}
+                resizeMode="cover"
+              />
+            ) : (
+              <AntDesign name="user" size={100} color="gray" />
+            )}
           </View>
-          <View style={styles.userPhotoContainer}>
+          <View style={styles.select_Photo_Btn_Container}>
             {/* BUTTON FOR TAKING PICTURE */}
             <TouchableOpacity onPress={getPermissionAndTakePicture}>
               <Entypo name="camera" size={30} color="gray" />
@@ -158,7 +163,7 @@ export default function ProfileScreen({
 
         {/* BUTTONS BLOCK */}
         <View style={styles.btnContainer}>
-          <TouchableOpacity style={styles.btn}>
+          <TouchableOpacity style={styles.btn} onPress={sendPicture}>
             <Text style={styles.btn_text}>Update</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -169,8 +174,8 @@ export default function ProfileScreen({
               AsyncStorage.removeItem("userToken");
               // console.log(1);
               AsyncStorage.removeItem("userId");
-              console.log(userToken);
-              console.log(userId);
+              // console.log(userToken);
+              // console.log(userId);
             }}
           >
             <Text style={styles.btn_text}>Log out</Text>
@@ -197,7 +202,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
-  userIcon: {
+  user_Profil_container: {
     borderRadius: 75,
     borderColor: "#EB5A62",
     borderWidth: 2,
@@ -205,10 +210,15 @@ const styles = StyleSheet.create({
     height: 150,
     justifyContent: "center",
     alignItems: "center",
-    // marginRight: 10,
   },
 
-  userPhotoContainer: {
+  imgProfil: {
+    height: 150,
+    width: 150,
+    borderRadius: 75,
+  },
+
+  select_Photo_Btn_Container: {
     height: 100,
     width: 100,
     justifyContent: "space-between",

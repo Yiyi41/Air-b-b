@@ -74,7 +74,7 @@ export default function SignUpScreen({ setUserData }) {
               style={styles.input}
               placeholder="email"
               onChangeText={(text) => {
-                setEmail(text);
+                setEmail(text.toLowerCase());
               }}
               value={email}
             />
@@ -102,7 +102,7 @@ export default function SignUpScreen({ setUserData }) {
               placeholder="Password"
               secureTextEntry={true}
               onChangeText={(text) => {
-                setPassword(text);
+                setPassword(text.toLowerCase());
               }}
               value={password}
             />
@@ -112,7 +112,7 @@ export default function SignUpScreen({ setUserData }) {
               placeholder="confirm password"
               secureTextEntry={true}
               onChangeText={(text) => {
-                setConfirmPassword(text);
+                setConfirmPassword(text.toLowerCase());
               }}
               value={confirmPassword}
             />
