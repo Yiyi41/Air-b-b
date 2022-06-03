@@ -92,7 +92,7 @@ export default function ProfileScreen({
         formData,
         { headers: { authorization: `Bearer ${userToken}` } }
       );
-      console.log(response.data);
+      // console.log(response.data);
       if (response.data) {
         setUploading(false);
         alert("envoyée");
@@ -105,26 +105,26 @@ export default function ProfileScreen({
   // EDIT USER INFO
   const sendUpdateInfo = async () => {
     setUploading(true);
-
+    console.log("enter sendUpdateInfo");
     try {
-      const formData = new FormData();
-      formData.append("userInfo", {
+      let updateinfo = {
         email: email,
         username: username,
         description: description,
-      });
+      };
 
+      // console.log("updateinfo ", updateinfo);
       const response = await axios.put(
         "https://express-airbnb-api.herokuapp.com/user/update",
-        formData,
+        updateinfo,
         { headers: { authorization: `Bearer ${userToken}` } }
       );
-
+      // console.log("response.data ", response.data);
       if (response.data) {
         setUploading(false);
-        alert("updated");
+        setUserProfile(response.data);
+        alert("updated 🌈");
       }
-      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -133,8 +133,6 @@ export default function ProfileScreen({
   useEffect(() => {
     const getProfilInfo = async () => {
       try {
-        // console.log(token);
-        // console.log(userId);
         const response = await axios.get(
           `https://express-airbnb-api.herokuapp.com/user/${userId}`,
           { headers: { authorization: `Bearer ${userToken}` } }
@@ -148,7 +146,7 @@ export default function ProfileScreen({
     };
     getProfilInfo();
   }, []);
-
+  // console.log(userProfil);
   return isLoading ? (
     <ActivityIndicator
       size="large"
@@ -242,7 +240,10 @@ export default function ProfileScreen({
                 />
                 <TouchableOpacity
                   style={styles.btn}
-                  onPress={() => setModalVisible(!modalVisible)}
+                  onPress={() => {
+                    setModalVisible(!modalVisible);
+                    sendUpdateInfo();
+                  }}
                 >
                   <Text style={styles.btn_text}>Update</Text>
                 </TouchableOpacity>
