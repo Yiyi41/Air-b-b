@@ -252,11 +252,11 @@ export default function ProfileScreen({
           </Modal>
 
           <TouchableOpacity
-            style={styles.btn}
+            style={styles.edit_btn}
             onPress={() => setModalVisible(true)}
           >
-            {/* <AntDesign name="edit" size={30} color="gray" /> */}
-            <Text style={styles.btn_text}>Edit</Text>
+            <AntDesign name="edit" size={20} color="#FFBAC0" />
+            {/* <Text style={styles.btn_text}>Edit</Text> */}
           </TouchableOpacity>
         </View>
 
@@ -358,16 +358,29 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").width * 0.9,
     justifyContent: "center",
     alignItems: "center",
-    marginVertical: 20,
+    marginVertical: 45,
   },
 
   btn: {
-    justifyContent: "center",
     width: "50%",
     alignItems: "center",
     padding: 15,
     borderRadius: 30,
     borderColor: "#EB5A62",
+    borderWidth: 2,
+  },
+
+  btn_text: {
+    fontSize: 18,
+  },
+
+  edit_btn: {
+    // justifyContent: "flex-end",
+    width: "15%",
+    alignItems: "center",
+    padding: 5,
+    borderRadius: 20,
+    borderColor: "#FFBAC0",
     borderWidth: 2,
     marginVertical: 5,
   },
