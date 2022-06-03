@@ -157,6 +157,7 @@ const styles = StyleSheet.create({
   },
 
   title: {
+    padding: 10,
     fontSize: 15,
     width: 250,
     marginVertical: 5,
@@ -173,6 +174,7 @@ const styles = StyleSheet.create({
 
   //   DESCRIPTION
   description: {
+    padding: 10,
     width: 300,
     marginVertical: 5,
   },

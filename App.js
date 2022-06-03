@@ -20,7 +20,7 @@ import HomeScreen from "./containers/HomeScreen";
 import ProfileScreen from "./containers/ProfileScreen";
 import SignInScreen from "./containers/SignInScreen";
 import SignUpScreen from "./containers/SignUpScreen";
-import SplashScreen from "./containers/SplashScreen";
+
 import RoomScreen from "./containers/RoomScreen";
 import AroundScreen from "./containers/AroundScreen";
 

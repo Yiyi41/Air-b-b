@@ -39,7 +39,6 @@ export default function SignInScreen({ setUserData, token, userId }) {
         );
         if (response.data.token) {
           setUserData(response.data.token, response.data.id);
-          //setUserId(response.data.id);
           Alert.alert("☀️Connected☀️");
         }
       } catch (error) {
@@ -48,7 +47,6 @@ export default function SignInScreen({ setUserData, token, userId }) {
         // console.log(error.response);
       }
     } else {
-      // console.log("alert");
       Alert.alert("Please fill all fields");
     }
   };
@@ -64,11 +62,11 @@ export default function SignInScreen({ setUserData, token, userId }) {
               resizeMode="contain"
               style={styles.logo}
             />
-            <Text style={styles.title}>Sign in</Text>
           </View>
 
           {/* INPUTS VIEW: EMAIL + PASSWORD */}
           <View style={styles.inputBlock}>
+            <Text style={styles.title}>Sign in</Text>
             <TextInput
               value={email}
               style={styles.input}
@@ -134,11 +132,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     color: "#717171",
+    textAlign: "center",
+    marginBottom: 50,
   },
 
   // INPUTS BLOCK
   inputBlock: {
-    paddingVertical: 50,
+    paddingVertical: 40,
   },
 
   input: {

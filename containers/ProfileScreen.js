@@ -362,6 +362,7 @@ const styles = StyleSheet.create({
   },
 
   btn: {
+    marginTop: 20,
     width: "50%",
     alignItems: "center",
     padding: 15,
@@ -375,7 +376,6 @@ const styles = StyleSheet.create({
   },
 
   edit_btn: {
-    // justifyContent: "flex-end",
     width: "15%",
     alignItems: "center",
     padding: 5,
