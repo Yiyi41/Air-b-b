@@ -6,6 +6,6 @@ A small clone of Airbnb app with React Native
 
 
 
-A small quick presentation:
+A quick presentation:
 <p align="center" >
 <img align="center" width="300" src="https://res.cloudinary.com/dps4zteie/image/upload/v1654269436/airbnb-demo_mi4tno.gif"/>
